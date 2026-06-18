@@ -20,7 +20,7 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
-        if email and senha:
+        if email=='evellyn@gmail.com' and senha=='123456':
             return render_template('index.html')
     return render_template('login.html')
 
