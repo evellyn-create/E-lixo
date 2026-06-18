@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {% extends 'base.html' %}
+{% block conteudo %}
+<div class="max-w-md mx-auto bg-base-200 p-6 border border-base-300 rounded-box shadow-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">Registrar Novo Resíduo</h1>
+    <form>
+        <label class="label">Selecione o Item para Descarte:</label>
+        <select class="select w-full bg-base-100">
+            {% for residuo in residuos %}
+                <option value="{{ residuo }}">{{ residuo }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="label mt-4">Condição do Objeto</label>
+        <textarea class="textarea w-full bg-base-100 h-24" placeholder=""></textarea>
+
+        <button type="button" class="btn w-full mt-4">Confirmar Agendamento</button>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>

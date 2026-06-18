@@ -7,14 +7,21 @@
 </head>
 <body>    
     {% extends 'base.html' %}
-    {% block conteudo %}
-    <h1>Página Inicial</h1>
-    <!-- Funcionalidade: registro de resíduos !-->
-    <a href="">Visualizar descarte</a> 
-    <a href=""></a>
-    {% endblock %}
-    <!-- Funcionalidade: registro de resíduos !-->
-    <a href="">Visualizar descarte</a> 
-    <a href=""></a>
+{% block conteudo %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center">Locais de Coleta Parceiros</h1>
+    <p class="mb-6 text-center text-gray-600">Leve seus resíduos eletrônicos a um dos postos de atendimento abaixo:</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {% for ponto in pontos %}
+        <div class="card bg-base-200 border border-base-300 shadow-sm p-4 rounded-box">
+            <h2 class="card-title text-xl "> {{ ponto.nome }}</h2>
+            <p class="text-sm mt-1"><strong>Endereço:</strong> {{ ponto.endereco }}</p>
+            <div class="badge badge-outline mt-3 font-semibold">{{ ponto.tipo }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
 </body>
 </html>

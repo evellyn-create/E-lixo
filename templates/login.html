@@ -9,23 +9,24 @@
 </head>
 <body>
     {% extends 'base.html' %}
-    {% block conteudo %}
-    <h1 class="text-xl">Login</h1>
-    <div>
-        <h1> Olá, seja bem vindo! </h1>
-        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-  <legend class="fieldset-legend">Login</legend>
+{% block conteudo %}
+<div class="flex flex-col items-center justify-center py-6">
+    <form action="{{ url_for('login') }}" method="POST" class="fieldset bg-base-200 border border-base-300 rounded-box w-xs p-6 shadow-lg">
+        <legend class="fieldset-legend text-xl font-bold">Acesse sua Conta</legend>
 
-  <label class="label">Email</label>
-  <input type="email" class="input" placeholder="Email" />
+        <label class="label">E-mail</label>
+        <input type="email" name="email" class="input w-full" placeholder="exemplo@email.com" required />
 
-  <label class="label">Password</label>
-  <input type="password" class="input" placeholder="Password" />
+        <label class="label">Senha</label>
+        <input type="password" name="senha" class="input w-full" placeholder="••••••••" required />
 
-  <button class="btn btn-neutral mt-4">Login</button>
-    <a class="text-gray-600">Não possui conta? Cadastre-se!</a>
-</fieldset>
-    </div>
-    {% endblock %}
+        <button type="submit" class="btn btn-neutral mt-4 w-full">Entrar</button>
+        
+        <a href="{{ url_for('cadastro') }}" class="text-sm text-center mt-4 hover:underline block">
+            Não possui conta? Cadastre-se!
+        </a>
+    </form>
+</div>
+{% endblock %}
 </body>
 </html>

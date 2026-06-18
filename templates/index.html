@@ -9,9 +9,19 @@
 </head>
 <body>
     {% extends 'base.html' %}
-    {% block conteudo %}
-    <h1>Página Inicial</h1>
-    {% endblock %}
-
+{% block conteudo %}
+<div class="hero bg-base-200 p-10 rounded-box text-center shadow-inner">
+    <div class="hero-content max-w-md mx-auto">
+        <div>
+            <h1 class="text-5xl font-bold">Descarte Consciente</h1>
+            <p class="py-6">Ajude a proteger o meio ambiente dando o destino correto aos seus eletrônicos velhos ou quebrados. Nosso sistema conecta você a ecopontos da sua região!</p>
+            <div class="flex gap-4 justify-center">
+                <a href="{{ url_for('registroderesiduo') }}" class="btn btn-outline">Quero Descartar</a>
+                <a href="{{ url_for('guiadedescarte') }}" class="btn bg-neutral text-white">Aprender Mais</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 </body>
 </html>

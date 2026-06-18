@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {% extends 'base.html' %}
+    {% block conteudo %}
+    <div class="flex flex-col items-center justify-center py-6">
+        <form action="{{ url_for('cadastro') }}" method="POST" class="fieldset bg-base-200 border border-base-300 rounded-box w-xs p-6 shadow-lg">
+            <legend class="fieldset-legend text-xl font-bold">Crie sua Conta</legend>
+    
+            <label class="label">Nome Completo</label>
+            <input type="text" name="nome" class="input w-full" placeholder="Seu Nome" required />
+    
+            <label class="label">E-mail</label>
+            <input type="email" name="email" class="input w-full" placeholder="seu@email.com" required />
+    
+            <label class="label">Senha</label>
+            <input type="password" name="senha" class="input w-full" placeholder="Mínimo 6 caracteres" required />
+    
+            <button type="submit" class="btn bg-neutral text-white mt-4 w-full">Finalizar Cadastro</button>
+            
+            <a href="{{ url_for('login') }}" class="text-sm text-center mt-4 hover:underline block">
+                Já possui conta? Faça Login
+            </a>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {% extends 'base.html' %}
+    {% block conteudo %}
+    <div class="max-w-xl mx-auto bg-base-200 p-6 border border-base-300 rounded-box shadow-md">
+        <h1 class="text-2xl font-bold mb-2 text-center">Guia de Triagem e Cuidados</h1>
+        <p class="text-sm text-center text-gray-500 mb-6">Descubra como preparar seu equipamento antes de levá-lo ao ponto.</p>
+    
+        <form action="{{ url_for('guiadedescarte') }}" method="POST" class="flex gap-2 items-end mb-6">
+            <div class="w-full">
+                <label class="label">Escolha a categoria:</label>
+                <select name="categoria" class="select w-full bg-base-100">
+                    <option value="bateria" {% if categoria == 'bateria' %}selected{% endif %}>Pilhas e Baterias</option>
+                    <option value="computador" {% if categoria == 'computador' %}selected{% endif %}>Computador / Notebook</option>
+                    <option value="celular" {% if categoria == 'celular' %}selected{% endif %}>Celulares</option>
+                    <option value="outros" {% if categoria == 'outros' %}selected{% endif %}>Outros Eletrodomésticos</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-neutral">Consultar</button>
+        </form>
+    
+        {% if mensagem %}
+            <div class="alert bg-base-100 border border-success p-4 rounded-box">
+                <div>
+                    <p class="font-medium text-gray-800">{{ mensagem }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+</body>
+</html>

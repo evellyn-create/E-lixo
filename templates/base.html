@@ -8,26 +8,33 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <div class="navbar bg-base-100 shadow-sm">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Logo</a>
-  </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1 flex gap-4">
-        <a class="btn btn-ghost" href="login">Login</a> |
-        <a  href="faleconosco">Fale Conosco</a> |
-        <a href="sobre">Sobre</a> |
-        <a href="gestaodedescarte">Gestão de descarte</a> |
-        <a href="localpontosdecoleta">Pontos de coleta</a> 
-    </ul>
-  </div>
+  <div class="navbar bg-base-200 shadow-md px-4">
+    <div class="flex-1">
+        <a href="{{ url_for('index') }}" class="btn btn-ghost text-xl font-bold">E-Lixo</a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1 gap-2 font-medium">
+            <li><a href="{{ url_for('index') }}">Início</a></li>
+            <li><a href="{{ url_for('gestaodedescarte') }}">Pontos de Coleta</a></li>
+            <li><a href="{{ url_for('registroderesiduo') }}">Registrar Resíduo</a></li>
+            <li><a href="{{ url_for('guiadedescarte') }}">Guia</a></li>
+            <li><a href="{{ url_for('sobre') }}">Sobre</a></li>
+            <li><a href="{{ url_for('faleconosco') }}">Contato</a></li>
+            <li><a href="{{ url_for('login') }}" class="btn btn-neutral btn-sm text-white">Login</a></li>
+        </ul>
+    </div>
 </div>
 
+<main class="flex-grow container mx-auto p-6">
+    {% block conteudo %}
+    {% endblock %}
+</main>
 
-     <section>
-       {% block conteudo %}
-       {% endblock %}
-    </section>
+<footer class="footer footer-center p-4 bg-base-300 text-base-content mt-10">
+    <aside>
+        <p>Copyright © 2026 - Projeto Integrador Ensino Médio</p>
+    </aside>
+</footer>
 
 </body>
 </html>

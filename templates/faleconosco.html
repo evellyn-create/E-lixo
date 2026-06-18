@@ -8,7 +8,18 @@
 <body>
     {% extends 'base.html' %}
     {% block conteudo %}
-    <h1>Página Inicial</h1>
+    <div class="max-w-md mx-auto bg-base-200 p-6 border border-base-300 rounded-box shadow-md">
+        <h1 class="text-2xl font-bold mb-4 text-center">Fale Conosco</h1>
+        <form>
+            <label class="label">Seu Nome</label>
+            <input type="text" class="input w-full bg-base-100" placeholder="Nome completo" />
+
+            <label class="label mt-2">Mensagem ou Dúvida</label>
+            <textarea class="textarea w-full bg-base-100 h-28" placeholder="Escreva sua mensagem aqui..."></textarea>
+
+            <button type="button" class="btn btn-neutral w-full mt-4">Enviar Mensagem</button>
+        </form>
+    </div>
     {% endblock %}
 </body>
 </html>

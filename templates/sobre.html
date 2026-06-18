@@ -7,8 +7,13 @@
 </head>
 <body>
     {% extends 'base.html' %}
-    {% block conteudo %}
-    <h1>Página Inicial</h1>
-    {% endblock %}
+{% block conteudo %}
+<div class="max-w-2xl mx-auto text-center py-6">
+    <h1 class="text-3xl font-bold mb-4">Sobre o Projeto EcoLixo</h1>
+    <p class="text-lg text-gray-600 leading-relaxed">
+        Este site é um protótipo funcional desenvolvido para o <span class="font-bold">Projeto Integrador do Ensino Médio</span>. Nosso objetivo principal é conscientizar a comunidade escolar e local sobre o descarte correto de componentes eletrônicos obsoletos, além de dar mais visibilidade para um projeto já existente no IFZN, reduzindo a poluição do solo e facilitando a reciclagem de materiais preciosos.
+    </p>
+</div>
+{% endblock %}
 </body>
 </html>
