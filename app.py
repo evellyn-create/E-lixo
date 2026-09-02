@@ -5,7 +5,7 @@ from utils import db
 import os
 from flask_migrate import Migrate
 from models import User, Residuo, Ponto_de_coleta
-from controllers.Usuario import bp_usuarios
+from controllers.User import bp_usuarios
 
 app = Flask(__name__)
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
