@@ -26,4 +26,4 @@ def create():
 
 		flash('Dados cadastrados com sucesso!")
 		return redirect(url_for('.recovery'))
-		#return redirect('/usuarios/recovery')
+		
