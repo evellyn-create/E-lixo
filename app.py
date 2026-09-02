@@ -6,9 +6,11 @@ import os
 from flask_migrate import Migrate
 from models import User, Residuo, Ponto_de_coleta
 from controllers.User import bp_usuarios
+from controllers.Residuo import bp_residuo
 
 app = Flask(__name__)
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
+app.register_blueprint(bp_residuo, url_prefix='/residuo')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
@@ -65,25 +67,6 @@ def registroderesiduo():
     residuos = ["Celular", "Notebook", "Bateria", "Carregador", "Televisor Antigo"]
     return render_template('registroderesiduo.html', residuos=residuos)
 
-
-@app.route('/guiadedescarte', methods=['GET', 'POST'])
-def guiadedescarte():
-    mensagem = None
-    categoria = None
-    
-    if request.method == 'POST':
-        categoria = request.form.get('categoria')
-    
-        if categoria == "bateria":
-            mensagem = "ATENÇÃO: Baterias e pilhas possuem compostos químicos tóxicos. Devem ser embaladas em plástico seco e levadas apenas a pontos especializados."
-        elif categoria == "computador":
-            mensagem = "DICA: Lembre-se de formatar e apagar seus dados pessoais antes de descartar computadores e notebooks."
-        elif categoria == "celular":
-            mensagem = "IMPORTANTE: Remova o chip (SIM) e o cartão de memória antes de entregar o aparelho."
-        else:
-            mensagem = "Procure o ecoponto mais próximo para o descarte seguro deste material."
-
-    return render_template('guiadedescarte.html', mensagem=mensagem, categoria=categoria)
 
 @app.route('/sobre')
 def sobre():

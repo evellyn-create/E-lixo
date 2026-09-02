@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, flash
-from models.User import User
+from models import User
 from utils import db
 from flask import Blueprint
 
@@ -7,7 +7,7 @@ bp_usuarios = Blueprint("usuarios", __name__, template_folder='templates')
 
 @bp_usuarios.route('/recovery')
 def recovery():
-	usuarios = Usuario.query.all()
+	usuarios = User.query.all()
 	return render_template('usuarios_recovery.html', usuarios = usuarios)
 
 @bp_usuarios.route('/create', methods=['GET', 'POST'])
@@ -24,6 +24,5 @@ def create():
 		db.session.add(usuario)
 		db.session.commit()
 
-		flash("Dados cadastrados com sucesso!")
 		return redirect(url_for('.recovery'))
 		

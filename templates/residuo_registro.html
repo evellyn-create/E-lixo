@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<form action="/usuarios/create" method="POST">
+  Dispositivo: <input type="text" name="dispostivo"><br/>
+  E-mail: <input type="text" name="email"><br/>
+  Senha: <input type="text" name="senha"><br/>
+  <input type="submit" name="Cadastrar">
+  <input type="reset" name="Limpar">
+</form>
+
+{% endblock %}
