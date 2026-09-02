@@ -1,13 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 from flask import flash, redirect
 from utils import db
 import os
 from flask_migrate import Migrate
-from models import User
-
+from models import User, Residuo, Ponto_de_coleta
+from controllers.Usuario import bp_usuarios
 
 app = Flask(__name__)
+app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
