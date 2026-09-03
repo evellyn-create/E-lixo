@@ -20,7 +20,7 @@ def create():
 		email = request.form.get('email')
 		senha = request.form.get('senha')
 		csenha = request.form.get('csenha')
-		usuario = Usuario(nome, email, senha)
+		usuario = User(nome, email, senha)
 		db.session.add(usuario)
 		db.session.commit()
 

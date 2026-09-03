@@ -7,10 +7,12 @@ from flask_migrate import Migrate
 from models import User, Residuo, Ponto_de_coleta
 from controllers.User import bp_usuarios
 from controllers.Residuo import bp_residuo
+from controllers.Ponto import bp_pontos
 
 app = Flask(__name__)
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
+app.register_blueprint(bp_pontos, url_prefix='/pontos')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
@@ -77,12 +79,6 @@ def sobre():
 def faleconosco():
     return render_template('faleconosco.html')
 
-@app.route('/teste_insert') 
-def teste_insert():
-    user = User("Gabriel", "gabriel@ifrn.edu.br", "54321")
-    db.session.add(user) #Insert into Usuario(nome, email, senha) values ('Alba Lopes', 'alba.lopes@ifrn.edu.br', '12345')
-    db.session.commit()
-    return 'Dados inseridos com sucesso!'
 
 if __name__ == '__main__':
     app.run(debug=True)

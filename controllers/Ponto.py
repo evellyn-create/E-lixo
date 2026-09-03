@@ -3,27 +3,27 @@ from models import Ponto_de_coleta
 from utils import db
 from flask import Blueprint
 
-bp_usuarios = Blueprint("usuarios", __name__, template_folder='templates') 
+bp_pontos = Blueprint("pontos", __name__, template_folder='templates') 
 
-@bp_usuarios.route('/recovery')
+@bp_pontos.route('/recovery')
 def recovery():
-	usuarios = User.query.all()
-	return render_template('usuarios_recovery.html', usuarios = usuarios)
+	pontos = Ponto_de_coleta.query.all()
+	return render_template('pontos_recovery.html', pontos = pontos)
 
-@bp_usuarios.route('/create', methods=['GET', 'POST'])
-def create():
-	if request.method=='GET':
-		return render_template('usuario_create.html')
+#@bp_usuarios.route('/create', methods=['GET', 'POST'])
+#def create():
+	# if request.method=='GET':
+	# 	return render_template('usuario_create.html')
 
-	if request.method=='POST':
-		nome = request.form.get('nome')
-		email = request.form.get('email')
-		senha = request.form.get('senha')
-		csenha = request.form.get('csenha')
-		usuario = Usuario(nome, email, senha)
-		db.session.add(usuario)
-		db.session.commit()
+	# if request.method=='POST':
+	# 	nome = request.form.get('nome')
+	# 	email = request.form.get('email')
+	# 	senha = request.form.get('senha')
+	# 	csenha = request.form.get('csenha')
+	# 	usuario = Usuario(nome, email, senha)
+	# 	db.session.add(ponto)
+	# 	db.session.commit()
 
-		flash("Dados cadastrados com sucesso!")
-		return redirect(url_for('.recovery'))
+	
+	return redirect(url_for('.recovery'))
 		

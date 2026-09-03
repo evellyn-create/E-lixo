@@ -13,17 +13,16 @@ def recovery():
 @bp_usuarios.route('/create', methods=['GET', 'POST'])
 def create():
 	if request.method=='GET':
-		return render_template('usuario_create.html')
+		return render_template('residuo_registro.html')
 
 	if request.method=='POST':
-		nome = request.form.get('nome')
-		email = request.form.get('email')
-		senha = request.form.get('senha')
-		csenha = request.form.get('csenha')
-		usuario = Usuario(nome, email, senha)
-		db.session.add(usuario)
+		tipo_de_residuo = request.form.get('tipo_de_residuo')
+		dispositivo = request.form.get('dispositivo')
+		descricao = request.form.get('descricao')
+		residuo = Residuo(tipo_de_residuo, dispositivo, descricao)
+		db.session.add(residuo)
 		db.session.commit()
 
-		flash("Dados cadastrados com sucesso!")
+
 		return redirect(url_for('.recovery'))
 		
