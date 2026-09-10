@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<form action="{{ url_for('residuo.create') }}" method="POST">
+  Tipo de residuo: <input type="text" name="tipo"><br/>
+  Dispositivo: <input type="text" name="dispostivo"><br/>
+  Descrição: <input type="text" name="descricao"><br/>
+  <div class="card-actions justify-end"><a href="{{ url_for('residuo_get') }}" class="btn btn-ghost">Cancelar</a><button type="submit" class="btn btn-primary">Cadastrar residuo</button></div>
+</form>
+
+{% endblock %}

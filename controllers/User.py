@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash, url_for
 from models import User
 from utils import db
 from flask import Blueprint
@@ -24,5 +24,6 @@ def create():
 		db.session.add(usuario)
 		db.session.commit()
 
-		return redirect(url_for('.recovery'))
+		return redirect(url_for('index'))
+
 		

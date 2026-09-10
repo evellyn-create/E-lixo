@@ -56,18 +56,33 @@ def login():
 def cadastro():
     if request.method == 'POST':
         return render_template('login.html')
-    return render_template('cadastro.html')
+    return render_template('usuario_create.html')
 
 
-@app.route('/gestaodedescarte')
-def gestaodedescarte():
-    return render_template('gestaodedescarte.html', pontos=PONTOS_COLETA)
+@app.route('/pontos_add')
+def pontos_add():
+    return render_template('pontos_add.html', pontos=PONTOS_COLETA)
 
 
-@app.route('/registroderesiduo')
-def registroderesiduo():
-    residuos = ["Celular", "Notebook", "Bateria", "Carregador", "Televisor Antigo"]
-    return render_template('registroderesiduo.html', residuos=residuos)
+@app.route('/residuo_add')
+def residuo_add():
+    return render_template('residuo_add.html')
+
+@app.route('/pontos_get')
+def pontos_get():
+    return render_template('pontos_get.html')
+
+@app.route('/residuo_get')
+def residuo_get():
+    return render_template('residuo_get.html')
+
+@app.route('/usuario_create')
+def usuario_create():
+    return render_template('usuario_create.html')
+
+@app.route('/usuario_get')
+def usuario_get():
+    return render_template('usuario_get.html')
 
 
 @app.route('/sobre')
