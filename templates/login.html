@@ -1,32 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
-</head>
-<body>
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
+
+{% block titulo %} Novo usuário {% endblock %}
+
 {% block conteudo %}
-<div class="flex flex-col items-center justify-center py-6">
-    <form action="{{ url_for('login') }}" method="POST" class="fieldset bg-base-200 border border-base-300 rounded-box w-xs p-6 shadow-lg">
-        <legend class="fieldset-legend text-xl font-bold">Acesse sua Conta</legend>
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+  <form action="{{ url_for('usuarios.add') }}" method="POST" class="card mx-auto max-w-xl border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-5">
+      <div class="mb-2">
+        <h1 class="card-title text-2xl">Novo usuário</h1>
+      </div>
+      <label class="form-control gap-2"><span class="label-text font-medium">Nome</span><input class="input input-bordered w-full" type="text" name="nome" placeholder="Nome completo" required></label>
+      <label class="form-control gap-2"><span class="label-text font-medium">E-mail</span><input class="input input-bordered w-full" type="email" name="email" placeholder="voce@exemplo.com" required></label>
+      <label class="form-control gap-2"><span class="label-text font-medium">Senha</span><input class="input input-bordered w-full" type="password" name="senha" placeholder="Digite uma senha" required></label>
+      
 
-        <label class="label">E-mail</label>
-        <input type="email" name="email" class="input w-full" placeholder="exemplo@email.com" required />
+        <button type="submit">Cadastrar</button>
+      </form>
 
-        <label class="label">Senha</label>
-        <input type="password" name="senha" class="input w-full" placeholder="••••••••" required />
+      <label class="flex cursor-pointer items-center justify-between rounded-lg border border-base-300 p-4">
 
-        <button type="submit" class="btn btn-neutral mt-4 w-full">Entrar</button>
-        
-        <a href="{{ url_for('usuario_create')}}" class="text-sm text-center mt-4 hover:underline block">
-            Não possui conta? Cadastre-se!
-        </a>
-    </form>
+        <span><span class="block font-medium">Administrador</span><span class="text-sm text-base-content/60">Permite acessar os recursos administrativos.</span></span>
+        <input type="checkbox" name="administrador" class="toggle toggle-primary" />
+      </label>
+      <div class="card-actions justify-end"><a href="{{ url_for('usuario_get') }}" class="btn btn-ghost">Cancelar</a><button type="reset" class="btn btn-outline">Limpar</button><button type="submit" class="btn btn-primary">Cadastrar usuário</button><button type="submit" class="btn btn-primary">Login</button></div>
+    </div>
+  </form>
 </div>
+
 {% endblock %}
-</body>
-</html>

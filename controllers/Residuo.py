@@ -20,7 +20,7 @@ def create():
 		db.session.add(residuo)
 		db.session.commit()
 
-
+		flash("Resíduo adicionado com sucesso.", 'success')
 		return redirect(url_for('residuo_get'))
 
 @bp_residuo.route('/delete/<int:id>')
@@ -28,5 +28,6 @@ def delete(id):
 	residuo = Residuo.query.get_or_404(id)
 	db.session.delete(reisduo)
 	db.session.commit()
+	flash('')
 	return redirect(url_for('.get'))
 		

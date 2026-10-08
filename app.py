@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import json
 from flask import flash, redirect
-from utils import db
+from utils import db, lm
 import os
 from flask_migrate import Migrate
 from models import User, Residuo, Ponto_de_coleta
@@ -27,14 +27,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db.init_app(app)
+lm.init_app(app)
 migrate = Migrate(app, db)
-
-
-PONTOS_COLETA = [
-    {"nome": "Ecoponto Central - Escola", "endereco": "Av. Principal, 123", "tipo": "Todos os eletrônicos"},
-    {"nome": "Cooperativa Recicla Tech", "endereco": "Rua da Reciclagem, 45", "tipo": "Pilhas e Baterias"},
-    {"nome": "Secretaria de Meio Ambiente", "endereco": "Praça dos Três Poderes, s/n", "tipo": "Computadores e Celulares"}
-]
 
 
 @app.route('/')
@@ -76,9 +70,9 @@ def pontos_get():
 def residuo_get():
     return render_template('residuo_get.html')
 
-@app.route('/usuario_create')
+@app.route('/usuario_add')
 def usuario_create():
-    return render_template('usuario_create.html')
+    return render_template('usuario_add.html')
 
 @app.route('/usuario_get')
 def usuario_get():
@@ -94,6 +88,18 @@ def sobre():
 def faleconosco():
     return render_template('faleconosco.html')
 
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+@app.errorhandler(403)
+def acesso_negado(error):
+    return render_template('acesso_negado.html'), 403
+
+@app.errorhandler(404)
+def pagina_nao_encontrada(error):  
+    return render_template('pagina_nao_encontrada.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

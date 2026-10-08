@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 
-<form action="{{ url_for('residuo.create') }}" method="POST">
+<form action="{{ url_for('residuo.add') }}" method="POST">
   Tipo de residuo: <input type="text" name="tipo"><br/>
   Dispositivo: <input type="text" name="dispostivo"><br/>
   Descrição: <input type="text" name="descricao"><br/>
