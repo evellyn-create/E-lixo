@@ -43,14 +43,10 @@ def login():
         senha = request.form.get('senha')
         if email=='evellyn@gmail.com' and senha=='123456':
             return render_template('index.html')
-    return render_template('login.html')
+    return render_template('cadastro.html')
 
 
-@app.route('/cadastro', methods=['GET', 'POST'])
-def cadastro():
-    if request.method == 'POST':
-        return render_template('login.html')
-    return render_template('usuario_create.html')
+
 
 
 @app.route('/pontos_add')

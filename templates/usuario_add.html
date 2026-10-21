@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 
-<form action="/usuario.add" method="POST">
+<form action="/usuario_add" method="POST">
   Nome: <input type="text" name="nome"><br/>
   E-mail: <input type="email" name="email"><br/>
   Senha: <input type="text" name="senha"><br/>
   Confirmar senha: <input type="text" name="csenha"><br/>
-  <input type="submit" name="Cadastrar">
-  <input type="reset" name="Limpar">
+  <button class="btn-primary"><a href="index.html"></a>Cadastrar</button>
 </form>
 
 {% endblock %}

@@ -26,9 +26,9 @@
                 <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
               </ul>
               {% if current_user.is_authenticated %}}
-              <!-- <li><a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair</a></li> -->
+              <li><a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair</a></li> 
               {% else %}
-              <li><a href="{{ url_for('login') }}" class="btn btn-primary btn-sm">Entrar</a></li>
+              <li><a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-sm">Entrar</a></li>
               {% endif %}
             </ul>
           </div>
@@ -61,7 +61,7 @@
            {% if current_user.is_authenticated %}
           <!-- <a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair</a> -->
           {% else %}
-          <a href="{{ url_for('login') }}" class="btn btn-primary btn-sm">Entrar</a>
+          <a href="{{ url_for('cadastro') }}" class="btn btn-primary btn-sm">Entrar</a>
           {% endif %}
         </div>
       </div>
@@ -105,7 +105,7 @@
   <nav>
     <h6 class="footer-title">Navegação</h6>
     <a href="{{ url_for('faleconosco') }}" class="link link-hover">Fale conosco</a>
-    <a href="{{ url_for('login') }}" class="link link-hover">Entrar</a>
+    <a href="{{ url_for('cadastro') }}" class="link link-hover">Entrar</a>
   </nav>
   <nav>
     <h6 class="footer-title">Administrativo</h6>
