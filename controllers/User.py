@@ -3,6 +3,7 @@ from models import User
 from utils import db, lm
 from flask import Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
+from werkzeug.security import check_password_hash
 
 
 bp_usuarios = Blueprint("usuarios", __name__, template_folder='templates') 
@@ -11,14 +12,14 @@ bp_usuarios = Blueprint("usuarios", __name__, template_folder='templates')
 #@login_required
 def get():
 	if current_user.administrador:
-		usuarios = Usuario.query.all()
+		usuarios = User.query.all()
 		return render_template('usuario_get.html', usuarios=usuarios)
 	else:
 		abort(403)
 
 @bp_usuarios.route('/recovery')
 def recovery():
-	usuarios = User.query.all()
+	usuario = User.query.all()
 	return render_template('usuarios_recovery.html', usuarios = usuarios)
 
 @bp_usuarios.route('/add', methods=['GET', 'POST'])
@@ -40,7 +41,7 @@ def add():
 
 @bp_usuarios.route('/delete/<int:id>')
 def delete(id):
-	u = Usuario.query.get(id)
+	u = User.query.get(id)
 	db.session.delete(u)
 	db.session.commit()
 	flash('Dados excluídos com sucesso', 'success')
@@ -48,8 +49,8 @@ def delete(id):
 
 @lm.user_loader
 def load_user(id):
-	usuario = Usuario.query.filter_by(id=id).first()
-	return usuario
+	usuario = User.query.filter_by(id=id).first()
+	return usuarios
 
 @bp_usuarios.route('/logout')
 def logout():
@@ -61,12 +62,12 @@ def logout():
 def autenticar():
 	email = request.form.get('email')
 	senha = request.form.get('senha')
-	usuario = Usuario.query.filter_by(email=email).first()
+	usuario = User.query.filter_by(email=email).first()
 	if usuario and check_password_hash(usuario.senha, senha):
 		login_user(usuario)
 		return redirect(url_for('admin'))
 	else:
-		flash('Usuário ou senha inválidos')
+		flash('Usuário ou senha inválidos', 'danger')
 		return redirect(url_for('login'))
 	
 @bp_usuarios.errorhandler(403)

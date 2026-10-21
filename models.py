@@ -1,6 +1,11 @@
 from utils import db
+from flask_login import UserMixin
+from flask_login import LoginManager
 
-class User(db.Model):
+lm = LoginManager()
+
+
+class User(UserMixin, db.Model):
     __tablename__= "user"
     id_user = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(100))

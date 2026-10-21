@@ -9,7 +9,9 @@ from controllers.User import bp_usuarios
 from controllers.Residuo import bp_residuo
 from controllers.Ponto import bp_pontos
 
+
 app = Flask(__name__)
+app.secret_key = 'e-lixo'
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
 app.register_blueprint(bp_pontos, url_prefix='/pontos')
@@ -31,6 +33,7 @@ lm.init_app(app)
 migrate = Migrate(app, db)
 
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,16 +41,12 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        senha = request.form.get('senha')
-        if email=='evellyn@gmail.com' and senha=='123456':
-            return render_template('index.html')
+    return render_template('login.html')
+
+
+@app.route('/cadastro')
+def cadastro():
     return render_template('cadastro.html')
-
-
-
-
 
 @app.route('/pontos_add')
 def pontos_add():
@@ -58,17 +57,16 @@ def pontos_add():
 def residuo_add():
     return render_template('residuo_add.html')
 
+
 @app.route('/pontos_get')
 def pontos_get():
     return render_template('pontos_get.html')
+
 
 @app.route('/residuo_get')
 def residuo_get():
     return render_template('residuo_get.html')
 
-@app.route('/usuario_add')
-def usuario_create():
-    return render_template('usuario_add.html')
 
 @app.route('/usuario_get')
 def usuario_get():
