@@ -1,0 +1,80 @@
+
+{% extends 'base.html' %}
+
+{% block titulo %} Início {% endblock %}
+
+{% block conteudo %}
+{% set residuos = [
+  ("Celulares e tablets", "Apague seus dados antes de entregar."),
+  ("Pilhas e baterias", "Nunca vão no lixo comum: contêm metais pesados e podem pegar fogo."),
+  ("Computadores e notebooks", "As placas guardam metais que podem ser recuperados."),
+  ("Cabos e carregadores", "O cobre de dentro deles é reaproveitado."),
+  ("Eletrodomésticos pequenos", "Ferros, secadores, rádios e similares."),
+] %}
+{% set motivos = [
+  ("Evita contaminação", "Chumbo, mercúrio e cádmio presentes em eletrônicos podem chegar ao solo e à água quando o descarte é feito de forma errada."),
+  ("Recupera materiais", "Cobre, ouro, prata e alumínio voltam à produção, o que reduz a necessidade de extrair novos recursos."),
+  ("Protege você", "Descartar pelo caminho certo evita acidentes com baterias e o uso indevido de dados que ficaram em aparelhos antigos."),
+] %}
+
+<div class="mx-auto max-w-7xl space-y-20 px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+
+  <div class="grid items-center gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="text-4xl font-black tracking-tight sm:text-5xl">
+        Seu aparelho velho tem um destino certo.
+      </h1>
+      <p class="mt-6 max-w-prose text-lg text-base-content/70">
+        O E-Lixo reúne as informações para você descartar lixo eletrônico sem poluir e sem perder materiais que podem ser reaproveitados.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        {% if current_user.is_authenticated %}
+          {% if current_user.is_authenticated and current_user.administrador %}
+            <a href="{{ url_for('admin') }}" class="btn btn-primary">Abrir área administrativa</a>
+          {% endif %}
+          <a href="{{ url_for('faleconosco') }}" class="btn btn-outline">Falar com a equipe</a>
+          <a href="{{ url_for('residuo_add') }}" class="btn btn-outline">Adicione um resíduo</a>
+        {% else %}
+          <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Criar conta</a>
+          <a href="{{ url_for('login') }}" class="btn btn-outline">Entrar</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <ul class="list rounded-box bg-base-100 shadow-sm">
+      <li class="p-4 pb-2 text-sm font-semibold text-base-content/60">O que você pode descartar</li>
+      {% for nome, dica in residuos %}
+      <li class="list-row">
+        <div class="list-col-grow">
+          <div class="font-semibold">{{ nome }}</div>
+          <div class="text-sm text-base-content/70">{{ dica }}</div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  <section>
+    <h2 class="text-2xl font-bold tracking-tight">Por que descartar do jeito certo</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      {% for titulo, texto in motivos %}
+      <div class="border-t-2 border-primary pt-4">
+        <h3 class="text-lg font-semibold">{{ titulo }}</h3>
+        <p class="mt-2 text-base-content/70">{{ texto }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <section class="rounded-box bg-primary p-8 text-primary-content sm:p-12">
+    <h2 class="text-2xl font-bold tracking-tight">Ficou com alguma dúvida sobre um aparelho?</h2>
+    <p class="mt-2 max-w-prose opacity-90">Conte para a gente o que você quer descartar e a equipe responde como fazer.</p>
+    <a href="{{ url_for('faleconosco') }}" class="btn btn-neutral mt-6">Fale conosco</a>
+  </section>
+
+</div>
+{% endblock %}
+</body>
+</html>

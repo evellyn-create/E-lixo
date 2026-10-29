@@ -9,7 +9,7 @@
 			<p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-lixo</p>
 			<h1 class="mt-2 text-3xl font-bold">Resíduos cadastrados</h1>
 			<div class="mt-4">
-				<a href="{{ url_for('residuo_add') }}" class="btn btn-primary">Novo resíduo</a>
+				<a href="{{ url_for('residuo.add') }}" class="btn btn-primary">Novo resíduo</a>
 			</div>
 		</div>
 
@@ -18,28 +18,28 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Tipo e resíduo</th>
+						<th>Tipo de resíduo</th>
 						<th>Dispositivo</th>
 						<th>Descrição</th>
 						<th class="text-right">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for r in residuo %}
+					{% for r in residuos %}
 					<tr>
-						<td class="font-semibold">{{ r.id }}</td>
-						<td>{{ r.tipo }}</td>
-						<td>{{ residuo.dispositivo }}</td>
-                        <td>{{ residuo.descricao }}</td>
+						<td class="font-semibold">{{ r.id_residuo }}</td>
+						<td>{{ r.tipo_de_residuo }}</td>
+						<td>{{ r.dispositivo }}</td>
+                        <td>{{ r.descricao }}</td>
 						<td>
-							<!-- <div class="flex justify-end gap-2">
-								<a href="{{ url_for('pizza.update', id=pizza.id) }}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar pizza" aria-label="Editar pizza">
+						<div class="flex justify-end gap-2">
+								<a href="{{ url_for('residuo.delete', id=r.id_residuo) }}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar residuo" aria-label="Editar residuo">
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
 								</a>
-								<a href="{{ url_for('pizza.delete', id=pizza.id) }}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Excluir pizza" aria-label="Excluir pizza" onclick="return confirm('Deseja excluir a pizza?')">
+								<a href="{{ url_for('residuo.delete', id=r.id_residuo) }}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Excluir residuo" aria-label="Excluir residuo" onclick="return confirm('Deseja excluir o resíduo?')">
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/></svg>
 								</a>
-							</div> -->
+						</div> 
 						</td>
 					</tr>
 					{% else %}

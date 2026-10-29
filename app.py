@@ -33,11 +33,13 @@ lm.init_app(app)
 migrate = Migrate(app, db)
 
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route("/home")
+def home():
+    return render_template("home.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,12 +52,12 @@ def cadastro():
 
 @app.route('/pontos_add')
 def pontos_add():
-    return render_template('pontos_add.html', pontos=PONTOS_COLETA)
+    return render_template('pontos_add.html')
 
 
-@app.route('/residuo_add')
-def residuo_add():
-    return render_template('residuo_add.html')
+#@app.route('/residuo_add')
+#def residuo_add():
+#    return render_template('residuo_add.html')
 
 
 @app.route('/pontos_get')
@@ -63,9 +65,6 @@ def pontos_get():
     return render_template('pontos_get.html')
 
 
-@app.route('/residuo_get')
-def residuo_get():
-    return render_template('residuo_get.html')
 
 
 @app.route('/usuario_get')
