@@ -33,7 +33,7 @@
             <a href="{{ url_for('admin') }}" class="btn btn-primary">Abrir área administrativa</a>
           {% endif %}
           <a href="{{ url_for('faleconosco') }}" class="btn btn-outline">Falar com a equipe</a>
-          <a href="{{ url_for('residuo_add') }}" class="btn btn-outline">Adicione um resíduo</a>
+          <a href="{{ url_for('residuo.add') }}" class="btn btn-outline">Adicione um resíduo</a>
         {% else %}
           <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Criar conta</a>
           <a href="{{ url_for('login') }}" class="btn btn-outline">Entrar</a>

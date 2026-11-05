@@ -23,24 +23,45 @@
               </ul>
   
 
-              {% if current_user.is_authenticated %}}
-              <li><a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair</a></li> 
+              {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
+              <button href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm" >Sair</button>
+              
               {% else %}
               <li><a href="{{ url_for('login') }}" class="btn btn-primary btn-sm">Entrar</a></li>
               {% endif %}
             </ul>
           </div>
-          <a href="{{ url_for('index') }}" class="text-xl font-black tracking-tight text-primary sm:text-2xl">E-Lixo</a>
+          <a class="text-xl font-black tracking-tight text-primary sm:text-2xl">E-Lixo</a>
+          {% if current_user.is_authenticated %}
+          <button class="btn" onclick="my_modal_4.showModal()">Voltar para o início</button>
+          <dialog id="my_modal_4" class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+              <h3 class="text-lg font-bold">Deseja voltar para o home?</h3>
+              <p class="py-4">Clique no botão para voltar ao home.</p>
+              <div class="modal-action">
+                <form method="dialog">
+                  
+                  <a href="{{url_for('home')}}" class="btn">Voltar ao início.</a>
+                </form>
+              </div>
+            </div>
+          </dialog>
+          {% endif %}
         </div>
 
         <nav class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal gap-1 px-1 text-sm font-medium">
             <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
-            {% if current_user.is_authenticated and current_user.administrador %}
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user.administrdor %}
             <li>
               <details>
                 
                 <summary>Administrativo</summary>
+                
                 <ul class="z-30 w-48 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
                   <li><a href="{{ url_for('admin') }}">Visão geral</a></li>
                   <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
@@ -49,9 +70,11 @@
                 
               </details>
             </li>
-            {%else%}
-              <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
-            {% endif %}
+             
+              
+              {% endif %}
+               
+           
           </ul>
         </nav>
 
@@ -81,7 +104,7 @@
        {% endblock %}
     </section>
 
-<footer class="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+<footer class="absolute footer sm:footer-horizontal bg-base-200 text-base-content p-10 md:justify-self-end">
   <aside>
     <svg
       width="50"
@@ -108,6 +131,7 @@
   <nav>
           <ul class="gap-1 px-1 text-sm font-medium">
             <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+            {% if current_user.is_authenticated and current_user.administrdor %}
             <li>
               <details>
                 <summary>Administrativo</summary>
@@ -117,6 +141,7 @@
                   {% if current_user.is_authenticated and current_user.administrador %}
                   <li><a href="{{ url_for('usuario_get') }}">Usuários</a></li>
                 </ul>
+                {% endif %}
               </details>
             </li>
             {% endif %}

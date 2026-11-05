@@ -30,11 +30,13 @@ class Residuo(db.Model):
     tipo_de_residuo = db.Column(db.String(100))
     dispositivo = db.Column(db.String(100))
     descricao = db.Column(db.String(100))
-
-    def __init__(self, tipo_de_residuo, dispositivo, descricao):
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id_user'), nullable=False)
+    
+    def __init__(self, tipo_de_residuo, dispositivo, descricao, id_user):
         self.tipo_de_residuo = tipo_de_residuo
         self.dispositivo = dispositivo
         self.descricao = descricao
+        self.id_user = id_user
 
 class Ponto_de_coleta(db.Model):
     __tablename__ = "ponto_de_coleta"

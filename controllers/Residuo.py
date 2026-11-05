@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, flash, url_for
+from flask_login import current_user
 from models import Residuo
 from utils import db
 from flask import Blueprint
@@ -16,8 +17,9 @@ def add():
 		tipo_de_residuo = request.form.get('tipo')
 		dispositivo = request.form.get('dispositivo')
 		descricao = request.form.get('descricao')
-		print(tipo_de_residuo, dispositivo, descricao)
-		residuo = Residuo(tipo_de_residuo, dispositivo, descricao)
+		id_user = current_user.id_user
+		print(tipo_de_residuo, dispositivo, descricao, id_user)
+		residuo = Residuo(tipo_de_residuo, dispositivo, descricao, id_user)
 		db.session.add(residuo)
 		db.session.commit()
 
@@ -35,5 +37,9 @@ def delete(id):
 
 @bp_residuo.route('/get')
 def get():
-	residuos = Residuo.query.all()
+	
+	if current_user.administrador:
+		residuos = Residuo.query.all()
+	else:
+		residuos = Residuo.query.filter_by(id_user=current_user.id_user).all()
 	return render_template('residuo_get.html', residuos=residuos)

@@ -12,9 +12,9 @@ bp_usuarios = Blueprint("usuario", __name__, template_folder='templates')
 def get():
 	if flask_login.current_user.administrador:
 		usuario = User.query.all()
-		return render_template('usuario_get.html', usuario=usuario)
-	else:
-		abort(403)
+	# else:
+	# 	abort(403)
+	return render_template('usuario_get.html', usuario=usuario)
 
 @bp_usuarios.route('/login')
 def login():
