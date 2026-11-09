@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Horários {% endblock %}
+
+{% block conteudo %}
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-5xl">
+		<div class="mb-6">
+			<p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-lixo</p>
+			<h1 class="mt-2 text-3xl font-bold">Horários de entrega</h1>
+			<div class="mt-4">
+				<a href="{{ url_for('horario.add') }}" class="btn btn-primary">Novo horário</a>
+			</div>
+		</div>
+
+		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100 shadow-sm">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Data</th>
+						<th>Horário</th>
+						<th>Status</th>
+						<th class="text-right">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for h in horarios %}
+					<tr>
+						<td class="font-semibold">{{ h.id_horario }}</td>
+						<td>{{ h.data_hora.strftime('%d/%m/%Y') }}</td>
+						<td>{{ h.data_hora.strftime('%H:%M') }}</td>
+						<td>
+							{% if h.ativo %}
+								<span class="badge badge-success badge-outline">Disponível</span>
+							{% else %}
+								<span class="badge badge-ghost">Desativado</span>
+							{% endif %}
+						</td>
+						<td>
+							<div class="flex justify-end gap-2">
+								{% if h.ativo %}
+								<a href="{{ url_for('horario.delete', id=h.id_horario) }}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Desativar horário" aria-label="Desativar horário" onclick="return confirm('Deseja desativar este horário?')">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/></svg>
+								</a>
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="5" class="py-10 text-center text-base-content/60">Nenhum horário cadastrado.</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

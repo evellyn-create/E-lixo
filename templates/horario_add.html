@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Novo horário {% endblock %}
+
+{% block conteudo %}
+<div class="mx-auto max-w-xl p-4">
+  <form action="{{ url_for('horario.add') }}" method="POST"
+        class="card w-full border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-5">
+      <div class="mb-2">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-lixo</p>
+        <h1 class="card-title text-2xl">Novo horário de entrega</h1>
+        <p class="text-sm opacity-70">Este horário ficará disponível para os usuários escolherem ao cadastrar um resíduo.</p>
+      </div>
+
+      <label class="form-control gap-2">
+        <span class="label-text font-medium">Data e hora</span>
+        <input id="data_hora" class="input input-bordered w-full" type="datetime-local" name="data_hora" required>
+      </label>
+
+      <div class="card-actions justify-end">
+        <a href="{{ url_for('horario.get') }}" class="btn btn-ghost">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Cadastrar horário</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const campo = document.getElementById('data_hora');
+  const agora = new Date();
+  agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+  campo.min = agora.toISOString().slice(0, 16);
+</script>
+{% endblock %}

@@ -9,7 +9,10 @@ bp_residuo = Blueprint("residuo", __name__, template_folder='templates')
 
 
 def horarios_disponiveis():
-    return (Horario.query.filter(Horario.ativo == True, Horario.data_hora > datetime.now()).order_by(Horario.data_hora).all())
+    return (Horario.query
+            .filter(Horario.ativo == True, Horario.data_hora > datetime.now())
+            .order_by(Horario.data_hora)
+            .all())
 
 
 @bp_residuo.route('/add', methods=['GET', 'POST'])
@@ -34,3 +37,21 @@ def add():
 
     flash("Resíduo adicionado com sucesso.", 'success')
     return redirect(url_for('residuo.get'))
+
+
+@bp_residuo.route('/delete/<int:id>')
+def delete(id):
+    residuo = Residuo.query.get_or_404(id)
+    db.session.delete(residuo)
+    db.session.commit()
+    flash('Resíduo deletado com sucesso', 'success')
+    return redirect(url_for('.get'))
+
+
+@bp_residuo.route('/get')
+def get():
+    if current_user.administrador:
+        residuos = Residuo.query.all()
+    else:
+        residuos = Residuo.query.filter_by(id_user=current_user.id_user).all()
+    return render_template('residuo_get.html', residuos=residuos)

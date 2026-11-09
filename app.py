@@ -1,10 +1,8 @@
-from flask import Flask, render_template, request
-import json
-from flask import flash, redirect
+from flask import Flask, render_template
 from utils import db, lm
 import os
 from flask_migrate import Migrate
-from models import User, Residuo, Horario
+# from models import User, Residuo, Horario
 from controllers.User import bp_usuarios
 from controllers.Residuo import bp_residuo
 from controllers.Horario import bp_horario
@@ -16,7 +14,7 @@ app = Flask(__name__)
 app.secret_key = 'e-lixo'
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
-app.register_blueprint(bp_horario, yrl_prefix='horario')
+app.register_blueprint(bp_horario, url_prefix='/horario')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')

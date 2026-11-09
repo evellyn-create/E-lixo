@@ -21,6 +21,7 @@
 						<th>Tipo de resíduo</th>
 						<th>Dispositivo</th>
 						<th>Descrição</th>
+						<th>Horário de entrega</th>
 						<th class="text-right">Ações</th>
 					</tr>
 				</thead>
@@ -31,6 +32,13 @@
 						<td>{{ r.tipo_de_residuo }}</td>
 						<td>{{ r.dispositivo }}</td>
                         <td>{{ r.descricao }}</td>
+						<td>
+						{% if r.horario %}
+							{{ r.horario.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+						{% else %}
+							<span class="text-base-content/50">—</span>
+						{% endif %}
+						</td>
 						<td>
 						<div class="flex justify-end gap-2">
 								<a href="{{ url_for('residuo.delete', id=r.id_residuo) }}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar residuo" aria-label="Editar residuo">
@@ -44,7 +52,7 @@
 					</tr>
 					{% else %}
 					<tr>
-						<td colspan="5" class="py-10 text-center text-base-content/60">Nenhum resíduo cadastrado.</td>
+						<td colspan="6" class="py-10 text-center text-base-content/60">Nenhum resíduo cadastrado.</td>
 					</tr>
 					{% endfor %}
 				</tbody>
