@@ -88,6 +88,15 @@
         <input class="input input-bordered w-full" name="descricao" required>
       </label>
 
+      <select class="select select-neutral font-medium w-full" name="horario" required>
+        <option disabled selected value="">Horário de entrega</option>
+        {% for h in horarios %}
+          <option value="{{ h.id_horario }}">{{ h.data_hora.strftime('%d/%m/%Y às %H:%M') }}</option>
+        {% else %}
+          <option disabled>Nenhum horário disponível</option>
+        {% endfor %}
+      </select>
+
       <div class="card-actions justify-end">
         <a href="{{ url_for('residuo.get') }}" class="btn btn-ghost">Cancelar</a>
         <button type="submit" class="btn btn-primary">Cadastrar resíduo</button>

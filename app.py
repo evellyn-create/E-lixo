@@ -4,17 +4,19 @@ from flask import flash, redirect
 from utils import db, lm
 import os
 from flask_migrate import Migrate
-from models import User, Residuo, Ponto_de_coleta
+from models import User, Residuo, Horario
 from controllers.User import bp_usuarios
 from controllers.Residuo import bp_residuo
-from controllers.Ponto import bp_pontos
+from controllers.Horario import bp_horario
+
+
 
 
 app = Flask(__name__)
 app.secret_key = 'e-lixo'
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
-app.register_blueprint(bp_pontos, url_prefix='/pontos')
+app.register_blueprint(bp_horario, yrl_prefix='horario')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
@@ -50,21 +52,10 @@ def login():
 def cadastro():
     return render_template('cadastro.html')
 
-@app.route('/pontos_add')
-def pontos_add():
-    return render_template('pontos_add.html')
 
-
-#@app.route('/residuo_add')
-#def residuo_add():
+# @app.route('/residuo_add')
+# def residuo_add():
 #    return render_template('residuo_add.html')
-
-
-@app.route('/pontos_get')
-def pontos_get():
-    return render_template('pontos_get.html')
-
-
 
 
 @app.route('/usuario_get')
