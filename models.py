@@ -1,3 +1,4 @@
+from datetime import datetime 
 from utils import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
@@ -48,5 +49,32 @@ class Residuo(db.Model):
         self.descricao = descricao
         self.id_user = id_user
         self.id_horario = id_horario
+
+class Mensagem(db.Model):
+    __tablename__ = "mensagem"
+
+    id_mensagem = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(100), nullable=False)
+    texto = db.Column(db.Text, nullable=False)
+    data_envio = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    id_autor = db.Column(db.Integer, db.ForeignKey('user.id_user'), nullable=False)
+    autor = db.relationship('User')
+
+    def __init__(self, titulo, texto, id_autor):
+        self.titulo = titulo
+        self.texto = texto
+        self.id_autor = id_autor
+
+
+class MensagemLida(db.Model):
+    """Registra quais usuários já leram cada mensagem."""
+    __tablename__ = "mensagem_lida"
+
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id_user'), primary_key=True)
+    id_mensagem = db.Column(db.Integer, db.ForeignKey('mensagem.id_mensagem'), primary_key=True)
+
+    def __init__(self, id_user, id_mensagem):
+        self.id_user = id_user
+        self.id_mensagem = id_mensagem
 
 

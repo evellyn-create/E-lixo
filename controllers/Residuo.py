@@ -1,6 +1,6 @@
 from datetime import datetime
-from flask import render_template, request, redirect, flash, url_for
-from flask_login import current_user
+from flask import render_template, request, redirect, flash, url_for, abort
+from flask_login import current_user, login_required
 from models import Residuo, Horario
 from utils import db
 from flask import Blueprint
@@ -55,3 +55,38 @@ def get():
     else:
         residuos = Residuo.query.filter_by(id_user=current_user.id_user).all()
     return render_template('residuo_get.html', residuos=residuos)
+
+@bp_residuo.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update(id):
+    residuo = Residuo.query.get_or_404(id)
+
+ 
+    if not current_user.administrador and residuo.id_user != current_user.id_user:
+        abort(403)
+
+ 
+    horarios = horarios_disponiveis()
+    if residuo.horario and residuo.id_horario not in {h.id_horario for h in horarios}:
+        horarios.insert(0, residuo.horario)
+
+    if request.method == 'GET':
+        return render_template('residuo_update.html', residuo=residuo, horarios=horarios)
+
+    id_horario = request.form.get('horario', type=int)
+
+
+    if id_horario != residuo.id_horario:
+        novo = Horario.query.get(id_horario) if id_horario else None
+        if not novo or not novo.ativo or novo.data_hora <= datetime.now():
+            flash('Horário inválido ou indisponível. Escolha outro.', 'error')
+            return render_template('residuo_update.html', residuo=residuo, horarios=horarios)
+        residuo.id_horario = id_horario
+
+    residuo.tipo_de_residuo = request.form.get('tipo')
+    residuo.dispositivo = request.form.get('dispositivo')
+    residuo.descricao = request.form.get('descricao')
+
+    db.session.commit()
+    flash('Resíduo atualizado com sucesso.', 'success')
+    return redirect(url_for('.get'))

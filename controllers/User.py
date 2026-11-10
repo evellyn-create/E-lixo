@@ -1,9 +1,9 @@
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, abort
 from models import User
 from utils import db, lm
 from flask import Blueprint
 import flask_login
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 bp_usuarios = Blueprint("usuario", __name__, template_folder='templates') 
@@ -40,12 +40,12 @@ def cadastro():
 		return redirect(url_for('index'))
 
 @bp_usuarios.route('/delete/<int:id>')
-def delete(id_user):
-	u = User.query.get(id_user)
-	db.session.delete(u)
-	db.session.commit()
-	flash('Dados excluídos com sucesso', 'success')
-	return redirect(url_for('.get'))
+def delete(id):
+		u = User.query.get_or_404(id)
+		db.session.delete(u)
+		db.session.commit()
+		flash('Dados excluídos com sucesso', 'success')
+		return redirect(url_for('.get'))
 
 @lm.user_loader
 def load_user(id_user):
@@ -71,7 +71,44 @@ def autenticar():
 	else:
 		flash('Usuário ou senha inválidos', 'danger')
 		return redirect(url_for('login'))
-	
+
+@bp_usuarios.route('/update/<int:id>', methods=['GET', 'POST'])
+@flask_login.login_required
+def update(id):
+	if not flask_login.current_user.administrador:
+		abort(403)
+
+	u = User.query.get_or_404(id)
+
+	if request.method == 'GET':
+		return render_template('usuario_update.html', u=u)
+
+	nome = request.form.get('nome', '').strip()
+	email = request.form.get('email', '').strip()
+	senha = request.form.get('senha', '')
+	administrador = request.form.get('administrador') == 'on'
+
+	if not nome or not email:
+		flash('Preencha nome e e-mail.', 'warning')
+		return redirect(url_for('.update', id=id))
+
+	outro = User.query.filter(User.email == email, User.id_user != id).first()
+	if outro:
+		flash('Já existe um usuário com esse e-mail.', 'danger')
+		return redirect(url_for('.update', id=id))
+
+	u.nome = nome
+	u.email = email
+	if senha:  # em branco = mantém a senha atual
+		u.senha = generate_password_hash(senha)
+	# evita o admin tirar o próprio acesso sem querer
+	if u.id_user != flask_login.current_user.id_user:
+		u.administrador = administrador
+
+	db.session.commit()
+	flash('Usuário atualizado com sucesso', 'success')
+	return redirect(url_for('.get'))
+
 @bp_usuarios.errorhandler(403)
 def acesso_negado(error):
     return render_template('acesso_negado.html'), 403

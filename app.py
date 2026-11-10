@@ -1,12 +1,13 @@
+from flask_login import current_user
 from flask import Flask, render_template
 from utils import db, lm
 import os
 from flask_migrate import Migrate
-# from models import User, Residuo, Horario
+from models import Mensagem, MensagemLida
 from controllers.User import bp_usuarios
 from controllers.Residuo import bp_residuo
 from controllers.Horario import bp_horario
-
+from controllers.Mensagem import bp_mensagem
 
 
 
@@ -15,6 +16,7 @@ app.secret_key = 'e-lixo'
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
 app.register_blueprint(bp_horario, url_prefix='/horario')
+app.register_blueprint(bp_mensagem, url_prefix='/mensagem')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db_usuario = os.getenv('DB_USERNAME')
 db_senha = os.getenv('DB_PASSWORD')
@@ -30,12 +32,24 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 lm.init_app(app)
+lm.login_view = 'login'
 migrate = Migrate(app, db)
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.context_processor
+def notificacoes():
+    if current_user.is_authenticated and not current_user.administrador:
+        lidas = db.session.query(MensagemLida.id_mensagem).filter_by(id_user=current_user.id_user)
+        nao_lidas = (Mensagem.query
+                     .filter(~Mensagem.id_mensagem.in_(lidas))
+                     .order_by(Mensagem.data_envio.desc())
+                     .all())
+        return dict(notif_nao_lidas=nao_lidas)
+    return dict(notif_nao_lidas=[])
 
 @app.route("/home")
 def home():

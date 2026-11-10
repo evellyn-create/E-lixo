@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Editar resíduo {% endblock %}
+
+{% block conteudo %}
+<div class="mx-auto max-w-2xl p-4">
+  <form method="POST" class="card w-full border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-5">
+      <h1 class="card-title text-2xl">Editar resíduo</h1>
+
+      <select class="select select-neutral font-medium w-full" name="tipo" required>
+        {% for t in ['Linha verde', 'Linha marrom', 'Linha azul', 'Pequenos itens'] %}
+          <option {% if t == residuo.tipo_de_residuo %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+
+      <label class="form-control gap-2">
+        <span class="label-text font-medium">Dispositivo</span>
+        <input class="input input-bordered w-full" type="text" name="dispositivo"
+               value="{{ residuo.dispositivo }}" required>
+      </label>
+
+      <label class="form-control gap-2">
+        <span class="label-text font-medium">Descrição</span>
+        <input class="input input-bordered w-full" name="descricao"
+               value="{{ residuo.descricao }}" required>
+      </label>
+
+      <select class="select select-neutral font-medium w-full" name="horario" required>
+        {% for h in horarios %}
+          <option value="{{ h.id_horario }}" {% if h.id_horario == residuo.id_horario %}selected{% endif %}>
+            {{ h.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+          </option>
+        {% else %}
+          <option disabled>Nenhum horário disponível</option>
+        {% endfor %}
+      </select>
+
+      <div class="card-actions justify-end">
+        <a href="{{ url_for('residuo.get') }}" class="btn btn-ghost">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

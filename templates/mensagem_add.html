@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Nova mensagem {% endblock %}
+
+{% block conteudo %}
+<main class="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl">
+    <h1 class="mb-6 text-3xl font-bold">Nova mensagem</h1>
+    <form method="post" class="card border border-base-300 bg-base-100 shadow-sm">
+      <div class="card-body gap-4">
+        <label class="form-control w-full">
+          <span class="label-text mb-1">Título</span>
+          <input type="text" name="titulo" maxlength="100" required class="input input-bordered w-full" />
+        </label>
+        <label class="form-control w-full">
+          <span class="label-text mb-1">Mensagem</span>
+          <textarea name="texto" rows="6" required class="textarea textarea-bordered w-full"></textarea>
+        </label>
+        <div class="card-actions justify-end">
+          <a href="{{ url_for('mensagem.get') }}" class="btn btn-ghost">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Enviar para os usuários</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}

@@ -19,6 +19,7 @@
               <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
               {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
+              <li><a href="{{ url_for('mensagem.get') }}">Mensagens</a></li>
               {% endif %}
               {% if current_user.is_authenticated and current_user.administrador %}
               <li><a href="{{ url_for('admin') }}">Área administrativa</a></li>
@@ -56,11 +57,41 @@
           <a href="{{ url_for('residuo.get') }}" class="link link-hover">Resíduos</a>
           <a href="{{ url_for('horario.get') }}" class="link link-hover">Horários</a>
           <a href="{{ url_for('usuario_get') }}" class="link link-hover">Usuários</a>
+          <a href="{{ url_for('mensagem.get') }}" class="link link-hover">Mensagens</a>
         </nav>
         {% endif %}
 
         <div class="navbar-end gap-2">
           <span class="hidden text-xs font-medium uppercase tracking-wider text-base-content/50 xl:inline">Área do sistema</span>
+          {% if current_user.is_authenticated and not current_user.administrador %}
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="Notificações">
+              <div class="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+                {% if notif_nao_lidas %}
+                <span class="badge badge-primary badge-xs indicator-item">{{ notif_nao_lidas|length }}</span>
+                {% endif %}
+              </div>
+            </div>
+            <div tabindex="0" class="dropdown-content z-30 mt-3 w-80 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
+              {% if notif_nao_lidas %}
+              <ul class="menu w-full">
+                {% for m in notif_nao_lidas[:5] %}
+                <li>
+                  <a href="{{ url_for('mensagem.get') }}" class="flex flex-col items-start gap-0">
+                    <span class="font-semibold">{{ m.titulo }}</span>
+                    <span class="text-xs text-base-content/60">{{ m.data_envio.strftime('%d/%m/%Y %H:%M') }}</span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p class="p-3 text-sm text-base-content/60">Nenhuma mensagem nova.</p>
+              {% endif %}
+              <a href="{{ url_for('mensagem.get') }}" class="btn btn-ghost btn-sm w-full">Ver todas as mensagens</a>
+            </div>
+          </div>
+          {% endif %}
           {% if current_user.is_authenticated %}
             <a href="{{ url_for('usuario.logout') }}" class="btn btn-outline btn-sm">Sair</a>
           {% else %}

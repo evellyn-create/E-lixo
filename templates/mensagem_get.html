@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block titulo %} Mensagens {% endblock %}
+
+{% block conteudo %}
+<main class="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <div class="mb-6 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Mensagens e avisos</h1>
+      {% if current_user.administrador %}
+      <a href="{{ url_for('mensagem.add') }}" class="btn btn-primary">Nova mensagem</a>
+      {% endif %}
+    </div>
+
+    {% if not lista %}
+    <p class="text-base-content/60">Nenhuma mensagem por aqui ainda.</p>
+    {% endif %}
+
+    <div class="flex flex-col gap-4">
+      {% for m in lista %}
+      <article class="card border border-base-300 bg-base-100 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title">
+            {{ m.titulo }}
+            {% if m.id_mensagem in novas %}<span class="badge badge-primary">Nova</span>{% endif %}
+          </h2>
+          <p class="whitespace-pre-line">{{ m.texto }}</p>
+          <div class="mt-2 flex items-center justify-between text-sm text-base-content/60">
+            <span>
+            {% if current_user.administrador %}Enviada por {{ m.autor.nome }} · {% endif %}
+            {{ m.data_envio.strftime('%d/%m/%Y %H:%M') }}
+            </span>
+            {% if current_user.administrador %}
+            <form method="post" action="{{ url_for('mensagem.delete', id_mensagem=m.id_mensagem) }}"
+                  onsubmit="return confirm('Excluir esta mensagem?')">
+              <button class="btn btn-error btn-outline btn-xs">Excluir</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -3,23 +3,42 @@
 {% block titulo %} Editar usuário {% endblock %}
 
 {% block conteudo %}
-
 <div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
-  <form action="{{url_for('usuario.update', id=u.id)}}" method="POST" class="card mx-auto max-w-xl border border-base-300 bg-base-100 shadow-sm">
-    <div class="card-body gap-5">
-      <div class="mb-2">
-        <h1 class="card-title text-2xl">Editar usuário</h1>
-        <p class="mt-1 text-sm text-base-content/60">Atualize os dados do usuário cadastrado.</p>
-      </div>
-      <label class="form-control gap-2"><span class="label-text font-medium">Nome</span><input class="input input-bordered w-full" type="text" name="nome" value="{{u.nome}}" required></label>
-      <label class="form-control gap-2"><span class="label-text font-medium">E-mail</span><input class="input input-bordered w-full" type="email" name="email" value="{{u.email}}" required></label>
-      <label class="flex cursor-pointer items-center justify-between rounded-lg border border-base-300 p-4">
-        <span><span class="block font-medium">Administrador</span><span class="text-sm text-base-content/60">Permite acessar os recursos administrativos.</span></span>
-        <input type="checkbox" name="administrador" class="toggle toggle-primary" {% if u.administrador %}checked{% endif %} />
-      </label>
-      <div class="card-actions justify-end"><a href="{{ url_for('usuario.get') }}" class="btn btn-ghost">Cancelar</a><button type="submit" class="btn btn-primary">Salvar alterações</button></div>
-    </div>
-  </form>
-</div>
+  <div class="mx-auto max-w-2xl">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-Lixo</p>
+    <h1 class="mb-6 mt-2 text-3xl font-bold">Editar usuário</h1>
 
+    <form method="post" class="card border border-base-300 bg-base-100 shadow-sm">
+      <div class="card-body gap-4">
+        <label class="form-control w-full">
+          <span class="label-text mb-1">Nome</span>
+          <input type="text" name="nome" value="{{ u.nome }}" maxlength="100" required class="input input-bordered w-full" />
+        </label>
+
+        <label class="form-control w-full">
+          <span class="label-text mb-1">E-mail</span>
+          <input type="email" name="email" value="{{ u.email }}" maxlength="100" required class="input input-bordered w-full" />
+        </label>
+
+        <label class="form-control w-full">
+          <span class="label-text mb-1">Nova senha</span>
+          <input type="password" name="senha" autocomplete="new-password" class="input input-bordered w-full" />
+          <span class="label-text-alt mt-1 text-base-content/60">Deixe em branco para manter a senha atual.</span>
+        </label>
+
+        <label class="label cursor-pointer justify-start gap-3">
+          <input type="checkbox" name="administrador" class="checkbox checkbox-primary"
+                 {% if u.administrador %}checked{% endif %}
+                 {% if u.id_user == current_user.id_user %}disabled{% endif %} />
+          <span class="label-text">Administrador</span>
+        </label>
+
+        <div class="card-actions justify-end">
+          <a href="{{ url_for('usuario.get') }}" class="btn btn-ghost">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
