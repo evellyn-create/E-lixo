@@ -1,21 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Lixo {% block titulo %} {% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body>
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
+
+{% block titulo %}Descarte consciente{% endblock %}
+
 {% block conteudo %}
-<div class="hero bg-base-200 p-10 rounded-box text-center shadow-inner">
-    <div class="hero-content max-w-md mx-auto">
-        <div>
-            <h1 class="text-5xl font-bold">Descarte Consciente</h1>
-            <p class="py-6">Ajude a proteger o meio ambiente dando o destino correto aos seus eletrônicos velhos ou quebrados. Nosso sistema conecta você a ecopontos da sua região!</p>
+
+<section class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+        <div class="badge badge-soft badge-primary mb-4">Descarte consciente</div>
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+            Seu eletrônico sem uso se descartado da maneira correta,pode virar solução!
+        </h1>
+        <p class="py-6 text-base-content/70 max-w-md">
+            Crie sua conta, registre os resíduos que você quer descartar e acompanhe tudo em uma lista.
+        </p>
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Criar conta</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline btn-primary">Entrar</a>
         </div>
     </div>
-</div>
+
+    <div class="card bg-primary/10">
+        <div class="card-body">
+            <h2 class="card-title text-secondary text-base">O que você pode registrar</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-base-100 rounded-box p-4 text-center text-sm">Celulares</div>
+                <div class="bg-base-100 rounded-box p-4 text-center text-sm">Pilhas e baterias</div>
+                <div class="bg-base-100 rounded-box p-4 text-center text-sm">Computadores</div>
+                <div class="bg-base-100 rounded-box p-4 text-center text-sm">Cabos e carregadores</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="por-que-importa" class="bg-base-200 py-16 scroll-mt-16">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-2xl font-bold text-center">Por que isso importa</h2>
+        <p class="text-center text-base-content/70 mt-2 mb-8">
+            O mundo produz lixo eletrônico bem mais rápido do que consegue reciclar.
+        </p>
+
+        <div class="stats stats-vertical md:stats-horizontal shadow w-full bg-base-100">
+            <div class="stat place-items-center text-center">
+                <div class="stat-value text-primary">62 mi</div>
+                <div class="stat-desc whitespace-normal">de toneladas de lixo eletrônico geradas no mundo em 2022</div>
+            </div>
+            <div class="stat place-items-center text-center">
+                <div class="stat-value text-primary">22,3%</div>
+                <div class="stat-desc whitespace-normal">foi coletado e reciclado de forma documentada</div>
+            </div>
+            <div class="stat place-items-center text-center">
+                <div class="stat-value text-primary">US$ 62 bi</div>
+                <div class="stat-desc whitespace-normal">em recursos recuperáveis foram desperdiçados</div>
+            </div>
+        </div>
+
+    
+</section>
+
+<section id="como-funciona" class="max-w-5xl mx-auto px-6 py-16 scroll-mt-16">
+    <h2 class="text-2xl font-bold text-center mb-8">Como funciona</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+        <div class="card border border-base-300">
+            <div class="card-body items-center text-center">
+                <h3 class="card-title text-base">1. Crie sua conta</h3>
+                <p class="text-sm text-base-content/70">Cadastre-se e entre no sistema.</p>
+            </div>
+        </div>
+        <div class="card border border-base-300">
+            <div class="card-body items-center text-center">
+                <h3 class="card-title text-base">2. Cadastre o resíduo</h3>
+                <p class="text-sm text-base-content/70">Informe o que você quer descartar.</p>
+            </div>
+        </div>
+        <div class="card border border-base-300">
+            <div class="card-body items-center text-center">
+                <h3 class="card-title text-base">3. Acompanhe a lista</h3>
+                <p class="text-sm text-base-content/70">Veja todos os resíduos registrados.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

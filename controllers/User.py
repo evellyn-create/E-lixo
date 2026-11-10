@@ -56,7 +56,8 @@ def load_user(id_user):
 def logout():
 	flask_login.logout_user()
 	flash('Você saiu do sistema.', 'success')
-	return redirect(url_for('login'))
+	return redirect(url_for('index'))
+	
 
 @bp_usuarios.route('/autenticar', methods=['POST'])
 def autenticar():
@@ -99,9 +100,8 @@ def update(id):
 
 	u.nome = nome
 	u.email = email
-	if senha:  # em branco = mantém a senha atual
+	if senha: 
 		u.senha = generate_password_hash(senha)
-	# evita o admin tirar o próprio acesso sem querer
 	if u.id_user != flask_login.current_user.id_user:
 		u.administrador = administrador
 
