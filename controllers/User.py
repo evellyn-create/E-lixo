@@ -67,7 +67,7 @@ def autenticar():
 	if usuario and check_password_hash(usuario.senha, senha):
 		flask_login.login_user(usuario)
 		if usuario.administrador:
-			return redirect(url_for('admin'))
+			return redirect(url_for('home'))
 		return redirect(url_for('home'))
 	else:
 		flash('Usuário ou senha inválidos', 'danger')
