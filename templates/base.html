@@ -30,6 +30,7 @@
               <li><a href="{{ url_for('index') }}#como-funciona">Como funciona</a></li>
               {% endif %}
               <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+              <li><a href="{{ url_for('sobre') }}">Sobre</a></li>
               {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('residuo.get') }}">Resíduos</a></li>
               <li><a href="{{ url_for('mensagem.get') }}">Mensagens</a></li>
@@ -47,7 +48,8 @@
               {% endif %}
             </ul>
           </div>
-          <a href="{{ url_for('home') if current_user.is_authenticated else url_for('index') }}" class="text-xl font-black tracking-tight text-primary sm:text-2xl">E-Lixo</a>
+          <img src="/static/img/Lg verde.png" alt="" class="w-6">
+          <a href="{{ url_for('home') if current_user.is_authenticated else url_for('index') }}" class="text-xl font-medium tracking-tight text-primary sm:text-2xl">E-Lixo</a>
         </div>
 
         <nav class="navbar-center hidden lg:flex">
@@ -74,6 +76,7 @@
                 <li><a href="{{ url_for('index') }}#como-funciona">Como funciona</a></li>
          {% endif %}
           <li><a href="{{ url_for('faleconosco') }}">Fale conosco</a></li>
+          <li><a href="{{ url_for('sobre') }}">Sobre</a></li>
          </ul>
         </nav>
 
@@ -165,7 +168,7 @@
   </nav>
   <nav>
     <h6 class="footer-title">Contato</h6>
-    <span>contato@elixo.com</span>
+    <span>elixoifrn@email.com</span>
     <span>Natal, RN</span>
   </nav>
 </footer>

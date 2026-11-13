@@ -28,7 +28,7 @@
           <div class="mt-2 flex items-center justify-between text-sm text-base-content/60">
             <span>
             {% if current_user.administrador %}Enviada por {{ m.autor.nome }} · {% endif %}
-            {{ m.data_envio.strftime('%d/%m/%Y %H:%M') }}
+            {{ m.data_envio|br }}
             </span>
             {% if current_user.administrador %}
             <form method="post" action="{{ url_for('mensagem.delete', id_mensagem=m.id_mensagem) }}"
