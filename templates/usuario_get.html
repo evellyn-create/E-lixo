@@ -3,49 +3,146 @@
 {% block titulo %} Usuários {% endblock %}
 
 {% block conteudo %}
-	<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
-		<div class="mx-auto max-w-5xl">
-		<div class="mb-6 flex flex-wrap items-end justify-between gap-4">
-			<div>
-				<p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-Lixo!</p>
-				<h1 class="mt-2 text-3xl font-bold">Usuários cadastrados</h1>
-			</div>
-			<a href="{{ url_for('usuario.cadastro') }}" class="btn btn-primary">Novo usuário</a>
-		</div>
+<div class="min-h-screen bg-base-200 px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl">
 
-		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100 shadow-sm">
-		<table class="table">
-			<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nome</th>
-				<th>E-mail</th>
-				<th>Tipo</th>
-				<th class="text-right">Ações</th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for u in usuario %}
-			<tr>
-				<td>{{u.id_user}}</td>
-				<td>{{u.nome}}</td>
-				<td>{{u.email}}</td>
-				<td><span class="badge {% if u.administrador %}badge-primary{% else %}badge-ghost{% endif %}">{% if u.administrador %}Administrador{% else %}Usuário comum{% endif %}</span></td>
-				<td>
-					<div class="flex justify-end gap-2">
-						<a href="{{url_for('usuario.update', id=u.id_user)}}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar usuário" aria-label="Editar usuário">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-						</a>
-						<a href="{{url_for('usuario.delete', id=u.id_user)}}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Excluir usuário" aria-label="Excluir usuário" onclick="return confirm('Deseja excluir o usuário?')">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/></svg>
-						</a>
-					</div>
-				</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-		</table>
-		</div>
-		</div>
-	</div>
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">E-Lixo!</p>
+                <h1 class="mt-2 text-3xl font-bold">Usuários cadastrados</h1>
+            </div>
+
+            <a href="{{ url_for('usuario.cadastro') }}" class="btn btn-primary">
+                Novo usuário
+            </a>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100 shadow-sm">
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Tipo</th>
+                        <th class="text-right">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for u in usuario %}
+                    <tr>
+                        <td>{{ u.id_user }}</td>
+                        <td>{{ u.nome }}</td>
+                        <td>{{ u.email }}</td>
+
+                        <td>
+                            <span class="badge {% if u.administrador %}badge-primary{% else %}badge-ghost{% endif %}">
+                                {% if u.administrador %}
+                                    Administrador
+                                {% else %}
+                                    Usuário comum
+                                {% endif %}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="flex justify-end gap-2">
+
+                                <!-- Botão Editar -->
+                                <a href="{{ url_for('usuario.update', id=u.id_user) }}"
+                                    class="btn btn-ghost btn-square btn-sm tooltip tooltip-left"
+                                    data-tip="Editar usuário"
+                                    aria-label="Editar usuário">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                                    </svg>
+                                </a>
+                                <button
+                                    class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left"
+                                    data-tip="Excluir usuário"
+                                    aria-label="Excluir usuário"
+                                    onclick="modal_excluir_{{ u.id_user }}.showModal()">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/>
+                                    </svg>
+                                </button>
+
+                                <dialog id="modal_excluir_{{ u.id_user }}" class="modal">
+                                    <div class="modal-box">
+
+                                        <h3 class="text-lg font-bold text-primary">
+                                            Confirmar exclusão
+                                        </h3>
+
+                                        <p class="py-4">
+                                            Tem certeza de que deseja excluir este usuário?
+
+                                            <br>
+
+                                            <span class="font-semibold">
+                                                {{ u.nome }}
+                                            </span>
+
+                                            <br>
+
+                                            <span class="text-sm text-base-content/60">
+                                                {{ u.email }}
+                                            </span>
+                                        </p>
+
+
+                                        <div class="modal-action">
+
+                                           
+                                            <form method="dialog">
+                                                <button class="btn btn-ghost">
+                                                    Cancelar
+                                                </button>
+                                            </form>
+
+                                         
+                                            <a href="{{ url_for('usuario.delete', id=u.id_user) }}"
+                                                class="btn btn-error text-white">
+                                                Excluir
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+                                
+                                    <form method="dialog" class="modal-backdrop">
+                                        <button>Fechar</button>
+                                    </form>
+                                </dialog>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="py-10 text-center text-base-content/60">
+                            Nenhum usuário cadastrado.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

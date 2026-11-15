@@ -25,34 +25,107 @@
 						<th class="text-right">Ações</th>
 					</tr>
 				</thead>
+
 				<tbody>
 					{% for r in residuos %}
 					<tr>
 						<td class="font-semibold">{{ r.id_residuo }}</td>
 						<td>{{ r.tipo_de_residuo }}</td>
 						<td>{{ r.dispositivo }}</td>
-                        <td>{{ r.descricao }}</td>
+						<td>{{ r.descricao }}</td>
+
 						<td>
-						{% if r.horario %}
-							{{ r.horario.data_hora.strftime('%d/%m/%Y às %H:%M') }}
-						{% else %}
-							<span class="text-base-content/50">—</span>
-						{% endif %}
+							{% if r.horario %}
+								{{ r.horario.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+							{% else %}
+								<span class="text-base-content/50">—</span>
+							{% endif %}
 						</td>
+
 						<td>
-						<div class="flex justify-end gap-2">
-								<a href="{{ url_for('residuo.update', id=r.id_residuo) }}" class="btn btn-ghost btn-square btn-sm tooltip tooltip-left" data-tip="Editar residuo" aria-label="Editar residuo">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+							<div class="flex justify-end gap-2">
+
+							
+								<a href="{{ url_for('residuo.update', id=r.id_residuo) }}"
+									class="btn btn-ghost btn-square btn-sm tooltip tooltip-left"
+									data-tip="Editar resíduo"
+									aria-label="Editar resíduo">
+
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+										viewBox="0 0 24 24" fill="none" stroke="currentColor"
+										stroke-width="2">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/>
+										<path stroke-linecap="round" stroke-linejoin="round"
+											d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+									</svg>
 								</a>
-								<a href="{{ url_for('residuo.delete', id=r.id_residuo) }}" class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left" data-tip="Excluir residuo" aria-label="Excluir residuo" onclick="return confirm('Deseja excluir o resíduo?')">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/></svg>
-								</a>
-						</div> 
+
+								
+								<button
+									class="btn btn-ghost btn-square btn-sm text-error tooltip tooltip-left"
+									data-tip="Excluir resíduo"
+									aria-label="Excluir resíduo"
+									onclick="modal_excluir_{{ r.id_residuo }}.showModal()">
+
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+										viewBox="0 0 24 24" fill="none" stroke="currentColor"
+										stroke-width="2">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/>
+										<path stroke-linecap="round" stroke-linejoin="round"
+											d="M8 6V4h8v2m-9 0 1 14h8l1-14M10 11v6m4-6v6"/>
+									</svg>
+								</button>
+
+							
+								<dialog id="modal_excluir_{{ r.id_residuo }}" class="modal">
+									<div class="modal-box">
+
+										<h3 class="text-lg font-bold text-primary">
+											Confirmar exclusão
+										</h3>
+
+										<p class="py-4">
+											Tem certeza de que deseja excluir este resíduo?
+											<br>
+											<span class="font-semibold">
+												{{ r.tipo_de_residuo }} - {{ r.dispositivo }}
+											</span>
+										</p>
+
+
+										<div class="modal-action">
+
+										
+											<form method="dialog">
+												<button class="btn btn-ghost">
+													Cancelar
+												</button>
+											</form>
+
+										
+											<a href="{{ url_for('residuo.delete', id=r.id_residuo) }}"
+												class="btn btn-error text-white">
+												Excluir
+											</a>
+
+										</div>
+									</div>
+
+								
+									<form method="dialog" class="modal-backdrop">
+										<button>Fechar</button>
+									</form>
+								</dialog>
+
+							</div>
 						</td>
 					</tr>
+
 					{% else %}
 					<tr>
-						<td colspan="6" class="py-10 text-center text-base-content/60">Nenhum resíduo cadastrado.</td>
+						<td colspan="6" class="py-10 text-center text-base-content/60">
+							Nenhum resíduo cadastrado.
+						</td>
 					</tr>
 					{% endfor %}
 				</tbody>
