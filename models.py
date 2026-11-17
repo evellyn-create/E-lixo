@@ -67,7 +67,6 @@ class Mensagem(db.Model):
 
 
 class MensagemLida(db.Model):
-    """Registra quais usuários já leram cada mensagem."""
     __tablename__ = "mensagem_lida"
 
     id_user = db.Column(db.Integer, db.ForeignKey('user.id_user'), primary_key=True)
