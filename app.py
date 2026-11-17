@@ -2,6 +2,8 @@ from flask_login import current_user
 from flask import Flask, render_template
 from utils import db, lm
 import os
+from dotenv import  load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), '.flaskenv'))
 from flask_migrate import Migrate
 from models import Mensagem, MensagemLida
 from controllers.User import bp_usuarios
