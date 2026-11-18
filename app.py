@@ -2,8 +2,6 @@ from flask_login import current_user
 from flask import Flask, render_template
 from utils import db, lm
 import os
-from dotenv import  load_dotenv
-load_dotenv(os.path.join(os.path.dirname(__file__), '.flaskenv'))
 from flask_migrate import Migrate
 from models import Mensagem, MensagemLida
 from controllers.User import bp_usuarios
@@ -14,6 +12,7 @@ from controllers.Mensagem import bp_mensagem
 
 
 app = Flask(__name__)
+app.secret_key = 'e-lixo'
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 app.register_blueprint(bp_residuo, url_prefix='/residuo')
 app.register_blueprint(bp_horario, url_prefix='/horario')
@@ -26,6 +25,7 @@ db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 
 conexao = f"mysql+pymysql://{db_usuario}:{db_senha}@{db_host}:{db_port}/{db_mydb}"
+print(conexao)
 app.config['SQLALCHEMY_DATABASE_URI'] = conexao
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -98,4 +98,4 @@ def pagina_nao_encontrada(error):
     return render_template('pagina_nao_encontrada.html'), 404
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
